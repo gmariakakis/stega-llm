@@ -1,3 +1,6 @@
+# Requires-Python >=3.9,<3.12
+
+
 accelerate==1.6.0
 altgraph==0.17.4
 bitsandbytes==0.45.5
@@ -29,10 +32,14 @@ sentencepiece==0.2.0
 setuptools==70.2.0
 sympy==1.13.1
 tokenizers==0.21.1
-torch==2.5.1+cu121
-torchaudio==2.5.1+cu121
-torchvision==0.20.1+cu121
+
+# ----- base -----
+torch==2.5.1        # CPU build
+# torch==2.5.1+cu121 --extra-index-url https://download.pytorch.org/whl/cu121    #CPU-GPU 
+torchaudio==2.5.1
+torchvision==0.20.1
 tqdm==4.67.1
 transformers==4.51.3
 typing_extensions==4.12.2
 urllib3==2.4.0
+
