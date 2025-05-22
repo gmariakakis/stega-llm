@@ -1,5 +1,5 @@
 # stega-llm
-# bash commands
+# Instructions 
 1) git clone https://github.com/gmariakakis/stega-llm.git
 2) cd stega-llm
  #Requires-Python >=3.9,<3.12 
