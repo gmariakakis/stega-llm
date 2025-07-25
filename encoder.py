@@ -1,5 +1,8 @@
 # encoder.py
 
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+import os
+
 # Character set for 5-bit encoding
 char_set = " abcdefghijklmnopqrstuvwxyz.,!?"
 # Build mappings for 5-bit codes
@@ -52,3 +55,29 @@ def decode_secret_message(bit_str: str) -> str:
             uppercase_next = False
         chars.append(ch)
     return "".join(chars)
+
+
+
+def encrypt_message(secret: str, key: bytes) -> bytes:
+    """Encrypt a message using AES-256-GCM and return nonce+ciphertext."""
+    aesgcm = AESGCM(key)
+    nonce = os.urandom(12)
+    return nonce + aesgcm.encrypt(nonce, secret.encode(), None)
+
+
+def decrypt_message(data: bytes, key: bytes) -> str:
+    """Decrypt data produced by :func:`encrypt_message`."""
+    aesgcm = AESGCM(key)
+    nonce, ct = data[:12], data[12:]
+    return aesgcm.decrypt(nonce, ct, None).decode()
+
+
+def bytes_to_bits(data: bytes) -> str:
+    """Convert bytes to a bit string."""
+    return "".join(format(b, "08b") for b in data)
+
+
+def bits_to_bytes(bits: str) -> bytes:
+    """Convert a bit string back to bytes."""
+    return bytes(int(bits[i:i+8], 2) for i in range(0, len(bits), 8))
+
